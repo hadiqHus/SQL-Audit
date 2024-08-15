@@ -12,19 +12,16 @@ def connect_to_db(db_name="TestSecurityDB.sqlite"):
 
 def configuration_check(cursor):
     print("Performing configuration checks...")
-
     # Check the SQLite version.
     query = "SELECT sqlite_version();"
     cursor.execute(query)
     version = cursor.fetchone()
-
     results = {"SQLite Version": version[0]} 
     print("Configuration Check Results:", results)
     return results
 
 def schema_audit(cursor):
     print("Performing schema audit...")
-
     # Retrieve all tables and their creation SQL
     query = "SELECT name, sql FROM sqlite_master WHERE type='table';"
     cursor.execute(query)
@@ -45,7 +42,6 @@ def schema_audit(cursor):
 
 def data_integrity_audit(cursor):
     print("Performing data integrity audit...")
-
     # Check foreign key constraints
     cursor.execute("PRAGMA foreign_key_check;")
     foreign_key_issues = cursor.fetchall()
@@ -58,34 +54,26 @@ def data_integrity_audit(cursor):
     """)
     not_null_issues = cursor.fetchall()
     print("NOT NULL Issues:", not_null_issues)
-
     return foreign_key_issues, not_null_issues
 
 def user_permissions_audit(cursor):
     print("Auditing user permissions...")
-
-    # we will audit the Users table.
+    # Audit the Users table.
     query = "SELECT * FROM Users;"
     cursor.execute(query)
     users = cursor.fetchall()
     print("User Permissions Audit:", users)
-
     return users
 
 def encryption_check(cursor):
     print("Checking data encryption practices...")
-
-    # SQLite does not support native encryption without extensions like SQLCipher.
-    # This check will simply note the absence of native encryption support.
     encryption_status = "No native encryption in SQLite without extensions."
     results = {"Encryption Supported": encryption_status}
-    print("Encryption Check:", results)  # Debugging
-
+    print("Encryption Check:", results)
     return results
 
 def generate_report(configuration_results, schema_results, schema_issues, integrity_results, user_permissions, encryption_results):
     print("Generating report...")
-
     # Creating dataframes for each section
     config_df = pd.DataFrame([configuration_results])
     schema_df = pd.DataFrame(schema_results, columns=["Table Name", "Table Definition"])
@@ -104,7 +92,6 @@ def generate_report(configuration_results, schema_results, schema_issues, integr
         not_null_df.to_excel(writer, sheet_name='Not_Null_Issues', index=False)
         users_df.to_excel(writer, sheet_name='User_Permissions', index=False)
         encryption_df.to_excel(writer, sheet_name='Encryption_Checks', index=False)
-
     print("Report generated: SQLite_Security_Audit_Report.xlsx")
 
 def main():
@@ -114,7 +101,6 @@ def main():
         return
 
     cursor = conn.cursor()
-
     # Perform the audits
     configuration_results = configuration_check(cursor)
     schema_results, schema_issues = schema_audit(cursor)
