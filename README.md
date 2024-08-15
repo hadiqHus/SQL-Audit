@@ -39,6 +39,10 @@ Run the `setup_database.py` script to create the database and populate it with d
 ```bash
 python setup_database.py
 ```
+![image](https://github.com/user-attachments/assets/3a5f5e90-012c-422c-86ea-b9683cc064d6)
+
+![image](https://github.com/user-attachments/assets/e76b1028-768d-421a-b45f-4b07635355e3)
+
 
 ## Example
 
