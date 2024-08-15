@@ -30,12 +30,6 @@ This project demonstrates how to simulate and audit foreign key violations in an
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
 
-3. Install the required Python packages:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
 ## Usage
 
 ### 1. Set Up the Database
