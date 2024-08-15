@@ -12,7 +12,7 @@ def simulate_foreign_key_violations(num_violations=50):
             cursor.execute("""
                 INSERT INTO UserProjects (user_id, project_id, role_on_project)
                 VALUES (?, ?, ?)
-            """, (user_id, project_id, 'Lead'))  # 'Lead' is an example role
+            """, (user_id, project_id, 'Lead'))
 
         conn.commit()
         print(f"{num_violations} foreign key violations simulated successfully.")
