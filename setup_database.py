@@ -3,7 +3,7 @@ import random
 import string
 
 def connect_to_db(db_name="TestSecurityDB.sqlite"):
-    # Connect to the SQLite database (or create it if it doesn't exist)
+    # Connect to the SQLite database
     conn = sqlite3.connect(db_name)
     return conn
 
@@ -19,8 +19,6 @@ def create_tables(cursor):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
-
-
     # Create the Departments table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Departments (
@@ -29,8 +27,6 @@ def create_tables(cursor):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
-
-
     # Create the Projects table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Projects (
@@ -41,8 +37,6 @@ def create_tables(cursor):
             FOREIGN KEY (department_id) REFERENCES Departments(department_id)
         )
     """)
-
-
     # Create the UserProjects table (many-to-many relationship)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS UserProjects (
@@ -54,8 +48,7 @@ def create_tables(cursor):
             FOREIGN KEY (user_id) REFERENCES Users(id),
             FOREIGN KEY (project_id) REFERENCES Projects(project_id)
         )
-    """)
-    
+    """)    
     print("Tables 'Users', 'Departments', 'Projects', and 'UserProjects' created successfully.")
 
 def generate_random_string(length):
@@ -82,7 +75,7 @@ def insert_departments_and_projects(cursor):
     for department in departments:
         cursor.execute("INSERT INTO Departments (department_name) VALUES (?);", (department,))
     
-    # Create some projects associated with the departments
+    # Create some departments
     projects = [('Website Revamp', 2), ('Product Launch', 3), ('Employee Training', 1), ('Client Outreach', 4)]
     for project_name, department_id in projects:
         cursor.execute("INSERT INTO Projects (project_name, department_id) VALUES (?, ?);", (project_name, department_id))
@@ -122,7 +115,7 @@ def main():
     # Assign users to projects
     insert_user_projects(cursor)
 
-    # Commit changes and close the connection
+    # Commit changes
     conn.commit()
     cursor.close()
     conn.close()
